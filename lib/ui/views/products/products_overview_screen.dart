@@ -1,5 +1,6 @@
 import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
+import 'package:ethio_shoppers/ui/views/cart/cart_screen.dart';
 import 'package:ethio_shoppers/ui/views/products/badge.dart';
 import 'package:ethio_shoppers/ui/views/products/products_grid.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               value: cart.itemCount.toString() ),
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
             ),
           )
         ],

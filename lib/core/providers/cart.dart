@@ -33,4 +33,15 @@ class Cart with ChangeNotifier {
     _items.forEach((key, value) => count += value.quantity);
     return count;
   }
+
+  double get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, value) => total += value.price*value.quantity);
+    return total;
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
 }
