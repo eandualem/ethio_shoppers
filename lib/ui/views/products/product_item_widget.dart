@@ -4,7 +4,7 @@ import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProductItem extends StatelessWidget {
+class ProductItemWidget extends StatelessWidget {
 
   // final String id;
   // final String title;

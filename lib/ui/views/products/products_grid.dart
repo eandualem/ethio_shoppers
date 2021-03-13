@@ -1,5 +1,5 @@
 import 'package:ethio_shoppers/core/providers/products.dart';
-import 'package:ethio_shoppers/ui/views/products/product_item.dart';
+import 'package:ethio_shoppers/ui/views/products/product_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class ProductsGrid extends StatelessWidget {
         ),
         itemBuilder: (context, index) => ChangeNotifierProvider.value(
           value: products[index],
-          child: ProductItem(
+          child: ProductItemWidget(
               // id: products[index].id,
               // title: products[index].title,
               // imageUrl: products[index].imageUrl

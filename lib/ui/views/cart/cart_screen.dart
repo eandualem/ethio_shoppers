@@ -1,6 +1,6 @@
 import 'package:ethio_shoppers/core/providers/cart.dart' show Cart;
 import 'package:ethio_shoppers/core/providers/orders.dart';
-import 'package:ethio_shoppers/ui/views/cart/cart_item.dart';
+import 'package:ethio_shoppers/ui/views/cart/cart_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +56,7 @@ class CartScreen extends StatelessWidget {
           SizedBox(height: 10,),
           Expanded(child: ListView.builder(
             itemCount: cart.items.length,
-            itemBuilder: (context, index) => CartItem(
+            itemBuilder: (context, index) => CartItemWidget(
                 cart.items.values.toList()[index].id,
                 cart.items.keys.toList()[index],  // key
                 cart.items.values.toList()[index].price,
