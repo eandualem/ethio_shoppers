@@ -1,6 +1,7 @@
 import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
 import 'package:ethio_shoppers/ui/views/cart/cart_screen.dart';
+import 'package:ethio_shoppers/ui/views/home/app_drawer.dart';
 import 'package:ethio_shoppers/ui/views/products/badge.dart';
 import 'package:ethio_shoppers/ui/views/products/products_grid.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           )
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(_showOnlyFavorites),
     );
   }
