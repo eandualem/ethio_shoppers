@@ -2,6 +2,7 @@ import 'package:ethio_shoppers/core/providers/product.dart';
 import 'package:flutter/material.dart';
 
 class Products with ChangeNotifier {
+
   List<Product> _items = [
     Product(
       id: 'p1',
@@ -36,6 +37,10 @@ class Products with ChangeNotifier {
       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
+
+  List<Product> get favoriteItems {
+    return items.where((prod) => prod.isFavorite).toList();
+  }
 
   List<Product> get items {
     return [..._items];

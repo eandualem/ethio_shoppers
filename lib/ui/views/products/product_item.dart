@@ -1,35 +1,41 @@
+import 'package:ethio_shoppers/core/providers/product.dart';
 import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
 
-  final String id;
-  final String title;
-  final String imageUrl;
-
-  ProductItem({
-    @required this.id,
-    @required this.title,
-    @required this.imageUrl});
+  // final String id;
+  // final String title;
+  // final String imageUrl;
+  //
+  // ProductItem({
+  //   @required this.id,
+  //   @required this.title,
+  //   @required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
+    Product product = Provider.of<Product>(context, listen: false);
+    print("Widget Rebuild!");
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
           onTap: (){
-            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: id);
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: product.id);
           },
-          child: Image.network(imageUrl, fit: BoxFit.cover,)),
+          child: Image.network(product.imageUrl, fit: BoxFit.cover,)),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          leading: IconButton(
-            icon: Icon(Icons.favorite),
-            color: Theme.of(context).accentColor,
-            onPressed: (){},
+          leading: Consumer<Product> ( // The whole app will not rebuild.
+            builder: (context, _product, child) => IconButton(
+              icon: Icon( _product.isFavorite ? Icons.favorite: Icons.favorite_border),
+              color: Theme.of(context).accentColor,
+              onPressed: _product.toggleIsFavoriteStatus,
+            ),
           ),
-          title: Text(title,
+          title: Text(product.title,
             textAlign: TextAlign.center,),
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
