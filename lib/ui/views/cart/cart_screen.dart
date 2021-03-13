@@ -1,4 +1,5 @@
 import 'package:ethio_shoppers/core/providers/cart.dart' show Cart;
+import 'package:ethio_shoppers/core/providers/orders.dart';
 import 'package:ethio_shoppers/ui/views/cart/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,10 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   TextButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Provider.of<Orders>(context, listen: false).addOrder(cart.items.values.toList(), cart.totalAmount);
+                        cart.clear();
+                      },
                       child: Text("ORDER NOW",
                         style: TextStyle(
                           color: Theme.of(context).primaryColor

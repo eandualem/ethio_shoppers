@@ -1,4 +1,5 @@
 import 'package:ethio_shoppers/core/providers/cart.dart';
+import 'package:ethio_shoppers/core/providers/orders.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
 import 'package:ethio_shoppers/ui/views/cart/cart_screen.dart';
 import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
@@ -18,6 +19,7 @@ class EthioShoppers extends StatelessWidget {
       providers: [
         ChangeNotifierProvider( create: (_) => Products()),
         ChangeNotifierProvider( create: (_) => Cart()),
+        ChangeNotifierProvider( create: (_) => Orders()),
       ],
       child: MaterialApp(
         title: "EthioShoppers",
