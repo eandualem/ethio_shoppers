@@ -1,4 +1,6 @@
+import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
+import 'package:ethio_shoppers/ui/views/products/badge.dart';
 import 'package:ethio_shoppers/ui/views/products/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +49,17 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 child: Text("Only Favorites"),
                 value: FilterOptions.Favorites,
               )
-            ],)
+            ],
+          ),
+          Consumer<Cart>(
+            builder: (_, cart, _child) => Badge(
+              child: _child,
+              value: cart.itemCount.toString() ),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: (){},
+            ),
+          )
         ],
       ),
       body: ProductsGrid(_showOnlyFavorites),

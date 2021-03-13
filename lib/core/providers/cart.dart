@@ -2,7 +2,7 @@ import 'package:ethio_shoppers/core/models/cart_item.dart';
 import 'package:flutter/material.dart';
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _items;
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
     return {..._items};
@@ -25,5 +25,12 @@ class Cart with ChangeNotifier {
          quantity: 1
        ));
      }
+     notifyListeners();
+  }
+
+  int get itemCount {
+    int count = 0;
+    _items.forEach((key, value) => count += value.quantity);
+    return count;
   }
 }

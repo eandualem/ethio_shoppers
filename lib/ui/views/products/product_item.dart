@@ -1,3 +1,4 @@
+import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/product.dart';
 import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Product product = Provider.of<Product>(context, listen: false);
+    Cart cart = Provider.of<Cart>(context, listen: false);
+
     print("Widget Rebuild!");
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -40,7 +43,9 @@ class ProductItem extends StatelessWidget {
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
             color: Theme.of(context).accentColor,
-            onPressed: (){},
+            onPressed: (){
+              cart.addItem(product.id, product.price, product.title);
+            },
           ),
         ),
       ),
