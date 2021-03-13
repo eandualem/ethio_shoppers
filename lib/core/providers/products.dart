@@ -1,4 +1,4 @@
-import 'package:ethio_shoppers/core/models/product.dart';
+import 'package:ethio_shoppers/core/providers/product.dart';
 import 'package:flutter/material.dart';
 
 class Products with ChangeNotifier {
@@ -39,5 +39,9 @@ class Products with ChangeNotifier {
 
   List<Product> get items {
     return [..._items];
+  }
+
+  Product findById(String id){
+    return items.firstWhere((prod) => prod.id == id);
   }
 }
