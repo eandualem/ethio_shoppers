@@ -6,6 +6,8 @@ import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
 import 'package:ethio_shoppers/ui/views/home/home_page.dart';
 import 'package:ethio_shoppers/ui/views/orders/orders_screen.dart';
 import 'package:ethio_shoppers/ui/views/products/products_overview_screen.dart';
+import 'package:ethio_shoppers/ui/views/user_products/edit_product_screen.dart';
+import 'package:ethio_shoppers/ui/views/user_products/user_products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +36,8 @@ class EthioShoppers extends StatelessWidget {
           ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
           CartScreen.routeName: (_) => CartScreen(),
           OrdersScreen.routeName: (_) => OrdersScreen(),
+          UserProductsScreen.routeName: (_) => UserProductsScreen(),
+          EditProductScreen.routeName: (_) => EditProductScreen()
         }
 
       ),
