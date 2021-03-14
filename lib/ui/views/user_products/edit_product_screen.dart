@@ -96,7 +96,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
             setState(() => _isLoading = false);
             Navigator.of(context).pop();
             print("Hello");
-          });
+          })
+          .catchError((error) => throw(error.toString()));
     }
   }
   @override
