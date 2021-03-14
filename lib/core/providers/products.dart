@@ -1,4 +1,5 @@
 import 'package:ethio_shoppers/core/providers/product.dart';
+import 'package:ethio_shoppers/core/services/products_service.dart';
 import 'package:flutter/material.dart';
 
 class Products with ChangeNotifier {
@@ -50,10 +51,14 @@ class Products with ChangeNotifier {
     return items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProduct(Product product) {
-    final newProduct = Product(id: DateTime.now().toString(), title: product.title, description: product.description, price: product.price, imageUrl: product.imageUrl);
-    _items.add(newProduct);
-    notifyListeners();
+  Future<void> addProduct(Product product){
+    ProductsService productsService = ProductsService();
+    return productsService.addProduct(product).then((newId) {
+      print(newId);
+      final newProduct = Product(id: newId, title: product.title, description: product.description, price: product.price, imageUrl: product.imageUrl);
+      _items.add(newProduct);
+      notifyListeners();
+    });
   }
 
   void editProduct(Product newProduct) {

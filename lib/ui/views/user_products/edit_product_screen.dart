@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:ethio_shoppers/core/providers/product.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +17,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _form = GlobalKey<FormState>();
   Product _editedProduct;
   var _isInit = true;
+  var _isLoading = false;
   var _initValues = {
     "title":"",
     "description":"",
@@ -70,6 +69,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     final isValid = _form.currentState.validate();
     if(!isValid) return;
     _form.currentState.save();
+    setState(() => _isLoading = true);
 
     if(_editedProduct != null) {
       _editedProduct = Product(
@@ -91,7 +91,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
           price: double.parse(_initValues["price"]),
           imageUrl: _initValues["imageUrl"]);
 
-      Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+      Provider.of<Products>(context, listen: false).addProduct(_editedProduct)
+          .then((_) {
+            setState(() => _isLoading = false);
+            Navigator.of(context).pop();
+            print("Hello");
+          });
     }
   }
   @override
@@ -105,7 +110,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 onPressed: _saveForm)
           ],
       ),
-      body: Padding(
+      body: _isLoading? Center(
+        child: CircularProgressIndicator(),
+      ) :Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _form,
