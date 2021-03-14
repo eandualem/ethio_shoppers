@@ -10,6 +10,8 @@ class UserProductItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var messanger = ScaffoldMessenger.of(context);
     return ListTile(
       leading: CircleAvatar(backgroundImage: NetworkImage(imageUrl),),
       title: Text(title),
@@ -25,7 +27,17 @@ class UserProductItemWidget extends StatelessWidget {
               color: Theme.of(context).primaryColor,),
             IconButton(
               icon: Icon(Icons.delete),
-              onPressed: (){deleteHandler(id);},
+              onPressed: () async {
+                try {
+                  await deleteHandler(id);
+                }
+                catch (err) {
+                  messanger.showSnackBar(
+                    SnackBar(
+                      content: Text(err),
+                      duration: const Duration(seconds: 1),));
+                }
+              },
               color: Theme.of(context).errorColor,)
           ],
         ),

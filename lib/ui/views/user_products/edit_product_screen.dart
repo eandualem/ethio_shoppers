@@ -65,7 +65,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.didChangeDependencies();
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if(!isValid) return;
     _form.currentState.save();
@@ -80,8 +80,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           imageUrl: _initValues["imageUrl"],
           isFavorite: _editedProduct.isFavorite
       );
-
-      Provider.of<Products>(context, listen: false).editProduct(_editedProduct);
+      await Provider.of<Products>(context, listen: false).editProduct(_editedProduct);
     }
     else{
       _editedProduct = Product(
@@ -91,14 +90,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
           price: double.parse(_initValues["price"]),
           imageUrl: _initValues["imageUrl"]);
 
-      Provider.of<Products>(context, listen: false).addProduct(_editedProduct)
-          .then((_) {
-            setState(() => _isLoading = false);
-            Navigator.of(context).pop();
-            print("Hello");
-          })
-          .catchError((error) => throw(error.toString()));
+      await Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
     }
+    setState(() => _isLoading = false);
+    Navigator.of(context).pop();
   }
   @override
   Widget build(BuildContext context) {
