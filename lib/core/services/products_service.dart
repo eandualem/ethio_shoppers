@@ -27,6 +27,8 @@ class ProductsService {
       final loadedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
 
+      if(loadedData == null) return null;
+
       loadedData.forEach((key, value) {
         loadedProducts.add(Product(
           id: key,
