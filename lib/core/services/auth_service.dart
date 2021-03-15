@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ethio_shoppers/core/models/http_exception.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
@@ -17,11 +18,10 @@ class AuthService {
         "returnSecureToken":true}));
 
       final responseData = json.decode(response.body);
-      if(responseData['error'] != null) throw responseData['error']['message'];
+      if(responseData['error'] != null) throw HttpException(responseData['error']['message']);
     }
     catch (err) {
-      // TODO
+      throw err;
     }
-
   }
 }

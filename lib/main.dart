@@ -1,3 +1,4 @@
+import 'package:ethio_shoppers/core/providers/auth.dart';
 import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/orders.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
@@ -21,6 +22,7 @@ class EthioShoppers extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider( create: (_) => Auth()),
         ChangeNotifierProvider( create: (_) => Products()),
         ChangeNotifierProvider( create: (_) => Cart()),
         ChangeNotifierProvider( create: (_) => Orders()),
