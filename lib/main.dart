@@ -1,6 +1,7 @@
 import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/orders.dart';
 import 'package:ethio_shoppers/core/providers/products.dart';
+import 'package:ethio_shoppers/ui/views/auth/auth_screen.dart';
 import 'package:ethio_shoppers/ui/views/cart/cart_screen.dart';
 import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
 import 'package:ethio_shoppers/ui/views/home/home_page.dart';
@@ -32,7 +33,7 @@ class EthioShoppers extends StatelessWidget {
           fontFamily: 'Lato'
         ),
         routes: {
-          '/': (_) => ProductsOverviewScreen(),
+          '/': (_) => AuthScreen(),
           ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
           CartScreen.routeName: (_) => CartScreen(),
           OrdersScreen.routeName: (_) => OrdersScreen(),
