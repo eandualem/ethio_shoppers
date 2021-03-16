@@ -25,7 +25,7 @@ class EthioShoppers extends StatelessWidget {
         ChangeNotifierProvider( create: (_) => Auth()),
         ChangeNotifierProvider( create: (_) => Cart()),
         ChangeNotifierProxyProvider<Auth, Products>( update: (ctx, auth, prevProducts) => Products(auth.token, auth.userId, prevProducts == null ? []: prevProducts.items), create: null ),
-        ChangeNotifierProxyProvider<Auth, Orders>( update: (ctx, auth, prevOrders) => Orders(auth.token, prevOrders == null ? []: prevOrders.orders), create: null ),
+        ChangeNotifierProxyProvider<Auth, Orders>( update: (ctx, auth, prevOrders) => Orders(auth.token, auth.userId, prevOrders == null ? []: prevOrders.orders), create: null ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, child) => MaterialApp(

@@ -5,8 +5,10 @@ import 'package:http/http.dart' as http;
 
 class OrderService {
   final String authToken;
-  OrderService(this.authToken);
-  String get url => 'https://ethio-shoppers-default-rtdb.firebaseio.com/orders.json?auth=$authToken';
+  final String userId;
+  OrderService(this.authToken, this.userId);
+
+  String get url => 'https://ethio-shoppers-default-rtdb.firebaseio.com/orders/$userId.json?auth=$authToken';
 
   Future<String> addOrder(List<CartItem> cartProducts, double total, DateTime timeStamp) async {
     try {

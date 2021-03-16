@@ -7,8 +7,8 @@ class Orders with ChangeNotifier {
   OrderService orderService;
   List<OrderItem> _orders;
 
-  Orders(authToken, this._orders) {
-    orderService = OrderService(authToken);
+  Orders(authToken, userId, this._orders) {
+    orderService = OrderService(authToken, userId);
   }
 
   List<OrderItem> get orders{
