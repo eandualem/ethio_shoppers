@@ -6,8 +6,8 @@ class Products with ChangeNotifier {
   ProductsService productsService;
   List<Product> _items;
 
-  Products(String authToken, this._items) {
-    productsService = ProductsService(authToken);
+  Products(String authToken, String userId, this._items) {
+    productsService = ProductsService(authToken, userId);
   }
 
   List<Product> get favoriteItems {
@@ -21,8 +21,8 @@ class Products with ChangeNotifier {
     return items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> fetchAndSetProduct() async {
-    _items = await productsService.loadProduct();
+  Future<void> fetchAndSetProduct({bool filterByUser=false}) async {
+    _items = await productsService.loadProduct(filterByUser);
     notifyListeners();
     return;
   }

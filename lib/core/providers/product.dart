@@ -18,8 +18,8 @@ class Product with ChangeNotifier {
     @required this.imageUrl,
     this.isFavorite = false});
 
-  void toggleIsFavoriteStatus(String authToken){
-    ProductsService productsService = ProductsService(authToken);
+  void toggleIsFavoriteStatus(String authToken, String userId){
+    ProductsService productsService = ProductsService(authToken, userId);
     productsService.setFavorite(id, !isFavorite);
     this.isFavorite = !this.isFavorite;
     notifyListeners();

@@ -5,9 +5,11 @@ class Auth with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
+
   AuthService _authService = AuthService();
 
   bool get isAuth => token != null;
+  String get userId => _userId;
 
   String get token {
     if(_expiryDate != null && _token != null && _expiryDate.isAfter(DateTime.now()))

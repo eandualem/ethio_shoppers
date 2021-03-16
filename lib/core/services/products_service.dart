@@ -4,17 +4,19 @@ import 'package:http/http.dart' as http;
 
 class ProductsService {
   final String authToken;
-  ProductsService(this.authToken);
-  String getUrl(String obj) => 'https://ethio-shoppers-default-rtdb.firebaseio.com/products$obj.json?auth=$authToken';
+  final String userId;
+  ProductsService(this.authToken, this.userId);
+
+  String getUrl(String obj, {String filterBy = ""}) => 'https://ethio-shoppers-default-rtdb.firebaseio.com/$obj.json?auth=$authToken&$filterBy';
 
   Future<String> addProduct(Product product) async {
     try {
-      final response = await http.post(Uri.parse(getUrl("")), body: json.encode({
+      final response = await http.post(Uri.parse(getUrl("products")), body: json.encode({
         "title": product.title,
         "description":product.description,
         "price":product.price,
         "imageUrl":product.imageUrl,
-        "isFavorite": product.isFavorite,
+        "creatorId": userId
       }));
       return json.decode(response.body)["name"].toString();
     }
@@ -23,13 +25,18 @@ class ProductsService {
     }
   }
 
-  Future<List<Product>> loadProduct() async {
+  Future<List<Product>> loadProduct(bool filterByUser) async {
+    Uri url = !filterByUser ? Uri.parse(getUrl("products")) :Uri.parse(getUrl("products", filterBy: 'orderBy="creatorId"&equalTo="$userId"'));
+
     try {
-      final response = await http.get(Uri.parse(getUrl("")));
+      final response = await http.get(url);
       final loadedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
 
       if(loadedData == null) return null;
+
+      final favoriteResponse = await http.get(Uri.parse(getUrl("userFavorites/$userId")));
+      final favoriteData = json.decode(favoriteResponse.body);
 
       loadedData.forEach((key, value) {
         loadedProducts.add(Product(
@@ -38,7 +45,7 @@ class ProductsService {
           description: value["description"],
           price: value["price"],
           imageUrl: value["imageUrl"],
-          isFavorite: value["isFavorite"]
+          isFavorite: favoriteData == null ? false : favoriteData[key] == null ? false : favoriteData[key]["fav"] ?? false
         ));
       });
       return loadedProducts;
@@ -49,7 +56,7 @@ class ProductsService {
   }
 
   Future<void> editProduct(Product product) async {
-    await http.patch(Uri.parse(getUrl("/${product.id}")), body: json.encode({
+    await http.patch(Uri.parse(getUrl("products/${product.id}")), body: json.encode({
       "title": product.title,
       "description":product.description,
       "price":product.price,
@@ -58,9 +65,9 @@ class ProductsService {
   }
 
   Future<void> setFavorite(String id, bool isFavorite) async {
-    await http.patch(Uri.parse(getUrl("/$id")), body: json.encode({
-      "isFavorite": isFavorite
-    }));
+    await http.put(Uri.parse(getUrl("userFavorites/$userId/$id")),
+      body: json.encode({
+        "fav": isFavorite, }));
   }
 
   Future<void> deleteProduct(String id) async {

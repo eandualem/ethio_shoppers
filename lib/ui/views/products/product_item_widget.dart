@@ -11,7 +11,7 @@ class ProductItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Product product = Provider.of<Product>(context, listen: false);
     Cart cart = Provider.of<Cart>(context, listen: false);
-    String authToken = Provider.of<Auth>(context, listen: false).token;
+    var authData = Provider.of<Auth>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -27,7 +27,7 @@ class ProductItemWidget extends StatelessWidget {
             builder: (context, _product, child) => IconButton(
               icon: Icon( _product.isFavorite ? Icons.favorite: Icons.favorite_border),
               color: Theme.of(context).accentColor,
-              onPressed: (){_product.toggleIsFavoriteStatus(authToken);},
+              onPressed: (){_product.toggleIsFavoriteStatus(authData.token, authData.userId);},
             ),
           ),
           title: Text(product.title,
