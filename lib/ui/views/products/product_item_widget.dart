@@ -1,3 +1,4 @@
+import 'package:ethio_shoppers/core/providers/auth.dart';
 import 'package:ethio_shoppers/core/providers/cart.dart';
 import 'package:ethio_shoppers/core/providers/product.dart';
 import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
@@ -10,8 +11,8 @@ class ProductItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Product product = Provider.of<Product>(context, listen: false);
     Cart cart = Provider.of<Cart>(context, listen: false);
+    String authToken = Provider.of<Auth>(context, listen: false).token;
 
-    print("Widget Rebuild!");
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -26,7 +27,7 @@ class ProductItemWidget extends StatelessWidget {
             builder: (context, _product, child) => IconButton(
               icon: Icon( _product.isFavorite ? Icons.favorite: Icons.favorite_border),
               color: Theme.of(context).accentColor,
-              onPressed: _product.toggleIsFavoriteStatus,
+              onPressed: (){_product.toggleIsFavoriteStatus(authToken);},
             ),
           ),
           title: Text(product.title,

@@ -3,9 +3,12 @@ import 'package:ethio_shoppers/core/services/products_service.dart';
 import 'package:flutter/material.dart';
 
 class Products with ChangeNotifier {
-  ProductsService productsService = ProductsService();
+  ProductsService productsService;
+  List<Product> _items;
 
-  List<Product> _items = [];
+  Products(String authToken, this._items) {
+    productsService = ProductsService(authToken);
+  }
 
   List<Product> get favoriteItems {
     return items.where((prod) => prod.isFavorite).toList();

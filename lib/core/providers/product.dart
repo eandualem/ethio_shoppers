@@ -2,7 +2,6 @@ import 'package:ethio_shoppers/core/services/products_service.dart';
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
-  ProductsService productsService = ProductsService();
 
   final String id;
   final String title;
@@ -19,7 +18,8 @@ class Product with ChangeNotifier {
     @required this.imageUrl,
     this.isFavorite = false});
 
-  void toggleIsFavoriteStatus(){
+  void toggleIsFavoriteStatus(String authToken){
+    ProductsService productsService = ProductsService(authToken);
     productsService.setFavorite(id, !isFavorite);
     this.isFavorite = !this.isFavorite;
     notifyListeners();

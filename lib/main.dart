@@ -23,26 +23,27 @@ class EthioShoppers extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider( create: (_) => Auth()),
-        ChangeNotifierProvider( create: (_) => Products()),
         ChangeNotifierProvider( create: (_) => Cart()),
-        ChangeNotifierProvider( create: (_) => Orders()),
+        ChangeNotifierProxyProvider<Auth, Products>( update: (ctx, auth, prevProducts) => Products(auth.token, prevProducts == null ? []: prevProducts.items), create: null ),
+        ChangeNotifierProxyProvider<Auth, Orders>( update: (ctx, auth, prevOrders) => Orders(auth.token, prevOrders == null ? []: prevOrders.orders), create: null ),
       ],
-      child: MaterialApp(
-        title: "EthioShoppers",
-        theme: ThemeData(
-          primaryColor: Colors.purple,
-          accentColor: Colors.deepOrange,
-          fontFamily: 'Lato'
+      child: Consumer<Auth>(
+        builder: (ctx, auth, child) => MaterialApp(
+            title: "EthioShoppers",
+            theme: ThemeData(
+                primaryColor: Colors.purple,
+                accentColor: Colors.deepOrange,
+                fontFamily: 'Lato'
+            ),
+            routes: {
+              '/': (_) => auth.isAuth? ProductsOverviewScreen(): AuthScreen(),
+              ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
+              CartScreen.routeName: (_) => CartScreen(),
+              OrdersScreen.routeName: (_) => OrdersScreen(),
+              UserProductsScreen.routeName: (_) => UserProductsScreen(),
+              EditProductScreen.routeName: (_) => EditProductScreen()
+            }
         ),
-        routes: {
-          '/': (_) => AuthScreen(),
-          ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
-          CartScreen.routeName: (_) => CartScreen(),
-          OrdersScreen.routeName: (_) => OrdersScreen(),
-          UserProductsScreen.routeName: (_) => UserProductsScreen(),
-          EditProductScreen.routeName: (_) => EditProductScreen()
-        }
-
       ),
     );
   }

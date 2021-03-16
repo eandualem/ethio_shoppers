@@ -4,9 +4,12 @@ import 'package:ethio_shoppers/core/services/order_service.dart';
 import 'package:flutter/material.dart';
 
 class Orders with ChangeNotifier {
-  final OrderService orderService = OrderService();
+  OrderService orderService;
+  List<OrderItem> _orders;
 
-  List<OrderItem> _orders = [];
+  Orders(authToken, this._orders) {
+    orderService = OrderService(authToken);
+  }
 
   List<OrderItem> get orders{
     return [..._orders];

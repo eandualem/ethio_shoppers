@@ -4,11 +4,13 @@ import 'package:ethio_shoppers/core/models/order_item.dart';
 import 'package:http/http.dart' as http;
 
 class OrderService {
-  final url = Uri.parse('https://ethio-shoppers-default-rtdb.firebaseio.com/orders.json');
+  final String authToken;
+  OrderService(this.authToken);
+  String get url => 'https://ethio-shoppers-default-rtdb.firebaseio.com/orders.json?auth=$authToken';
 
   Future<String> addOrder(List<CartItem> cartProducts, double total, DateTime timeStamp) async {
     try {
-      final response = await http.post(url, body: json.encode({
+      final response = await http.post(Uri.parse(url), body: json.encode({
         "amount": total,
         'dateTime': timeStamp.toIso8601String(),
         'products': cartProducts.map((cp) => {
@@ -27,7 +29,7 @@ class OrderService {
 
   Future<List<OrderItem>> loadOrders() async {
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final loadedData = json.decode(response.body) as Map<String, dynamic>;
       final List<OrderItem> loadedOrders = [];
 
