@@ -6,6 +6,7 @@ import 'package:ethio_shoppers/ui/views/auth/auth_screen.dart';
 import 'package:ethio_shoppers/ui/views/cart/cart_screen.dart';
 import 'package:ethio_shoppers/ui/views/detail/product_detail_screen.dart';
 import 'package:ethio_shoppers/ui/views/home/home_page.dart';
+import 'package:ethio_shoppers/ui/views/home/splash_screen.dart';
 import 'package:ethio_shoppers/ui/views/orders/orders_screen.dart';
 import 'package:ethio_shoppers/ui/views/products/products_overview_screen.dart';
 import 'package:ethio_shoppers/ui/views/user_products/edit_product_screen.dart';
@@ -36,7 +37,7 @@ class EthioShoppers extends StatelessWidget {
                 fontFamily: 'Lato'
             ),
             routes: {
-              '/': (_) => auth.isAuth? ProductsOverviewScreen(): AuthScreen(),
+              '/': (_) => auth.isAuth? ProductsOverviewScreen(): _buildLoginWidget(auth),
               ProductDetailScreen.routeName: (_) => ProductDetailScreen(),
               CartScreen.routeName: (_) => CartScreen(),
               OrdersScreen.routeName: (_) => OrdersScreen(),
@@ -46,6 +47,14 @@ class EthioShoppers extends StatelessWidget {
         ),
       ),
     );
+  }
+  
+  Widget _buildLoginWidget(Auth auth) {
+    return FutureBuilder(
+      future: auth.tryAutoLogin(),
+      builder: (ctx, authResultSnapshot) {
+        return authResultSnapshot.connectionState == ConnectionState.waiting ? SplashScreen(): AuthScreen();
+    });
   }
 }
 

@@ -1,6 +1,8 @@
+import 'package:ethio_shoppers/core/providers/auth.dart';
 import 'package:ethio_shoppers/ui/views/orders/orders_screen.dart';
 import 'package:ethio_shoppers/ui/views/user_products/user_products_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -34,6 +36,14 @@ class AppDrawer extends StatelessWidget {
             title: Text('Manage Products'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(UserProductsScreen.routeName);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Logout'),
+            onTap: () {
+              Provider.of<Auth>(context, listen: false).logout();
             },
           )
 
